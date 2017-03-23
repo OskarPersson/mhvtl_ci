@@ -4,15 +4,26 @@ os:
 sudo: required
 
 install:
-  - sudo groupadd -g 95 vtl
-  - sudo useradd -c "Vitrual Tape Library" -d /opt/mhvtl -g vtl -m vtl -s /bin/bash -u 95
-  - git clone https://github.com/markh794/mhvtl
-  - cd mhvtl
-  - ./configure --prefix=/usr
-  - make
-  - make install
-  - cd /usr/src/mhvtl-1.4/kernel
-  - make
-  - make install
-  - cp /usr/bin/mhvtl-1.4/etc/mhvtl /etc/rc.d/rc.mhvtl
-  - chmod 755 /etc/rc.d/rc.mhvtl
+  - mkdir $HOME/src 
+   
+  - sudo groupadd -r vtl 
+  - sudo useradd -r -c "Virtual Tape Library" -d /opt/mhvtl -g vtl vtl -s /bin/bash 
+  - sudo mkdir -p /opt/mhvtl 
+  - sudo mkdir -p /etc/mhvtl 
+  - sudo chown -Rf vtl:vtl /opt/mhvtl 
+  - sudo chown -Rf vtl:vtl /etc/mhvtl 
+
+
+  - cd $HOME/src/ 
+  - git clone http://github.com/markh794/mhvtl.git
+  - cd mhvtl 
+  - make distclean 
+  - cd kernel/ 
+  - make && sudo make install 
+  - cd .. 
+  - make && sudo make install 
+
+
+  - sudo mkdir /etc/tgt 
+  - sudo ln -s /usr/lib64/libvtlscsi.so /usr/lib/ 
+  - sudo service mhvtl start 
