@@ -4,6 +4,7 @@ os:
 sudo: required
 
 install:
+  - sudo apt-get update && sudo apt-get install apache2 php5 sysstat lzop liblzo2-dev liblzo2-2 mtx mt-st sg3-utils zlib1g-dev git lsscsi build-essential gawk alien fakeroot linux-headers-$(uname -r) -y; cd $HOME
   - mkdir $HOME/src 
    
   - sudo groupadd -r vtl 
