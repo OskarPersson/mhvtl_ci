@@ -29,3 +29,6 @@ install:
 
   - sudo mkdir /etc/tgt 
   - sudo service mhvtl start 
+
+script:
+  - lsscsi -g
