@@ -26,5 +26,4 @@ install:
 
 
   - sudo mkdir /etc/tgt 
-  - sudo ln -s /usr/lib64/libvtlscsi.so /usr/lib/ 
   - sudo service mhvtl start 
