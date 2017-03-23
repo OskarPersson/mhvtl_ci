@@ -4,14 +4,14 @@ os:
 sudo: required
 
 install:
-  - groupadd -g 95 vtl
-  - useradd -c "Vitrual Tape Library" -d /opt/mhvtl -g vtl -m vtl -s /bin/bash -u 95
+  - sudo groupadd -g 95 vtl
+  - sudo useradd -c "Vitrual Tape Library" -d /opt/mhvtl -g vtl -m vtl -s /bin/bash -u 95
   - git clone https://github.com/markh794/mhvtl
   - cd mhvtl
   - make
-  - make install
+  - sudo make install
   - cd /usr/src/mhvtl-1.4/kernel
   - make
-  - make install
+  - sudo make install
   - cp /usr/src/mhvtl-1.4/etc/mhvtl /etc/rc.d/rc.mhvtl
   - chmod 755 /etc/rc.d/rc.mhvtl
