@@ -13,5 +13,5 @@ install:
   - cd /usr/src/mhvtl-1.4/kernel
   - make
   - sudo make install
-  - cp /usr/src/mhvtl-1.4/etc/mhvtl /etc/rc.d/rc.mhvtl
+  - cp /usr/bin/mhvtl-1.4/etc/mhvtl /etc/rc.d/rc.mhvtl
   - chmod 755 /etc/rc.d/rc.mhvtl
