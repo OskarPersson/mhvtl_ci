@@ -1,13 +1,15 @@
 os:
   - linux
   - osx
+  
+sudo: required
 
 install:
   - git clone https://github.com/markh794/mhvtl
   - cd mhvtl
   - make
-  - make install
+  - sudo make install
   - cd /usr/src/mhvtl-1.4/kernel
   - make
-  - make install
+  - sudo make install
   - cp /usr/src/mhvtl-1.4/etc/mhvtl /etc/rc.d/rc.mhvtl
