@@ -12,14 +12,8 @@ install:
   - cd $HOME
   - git clone https://github.com/markh794/mhvtl.git mhvtl
   - cd mhvtl/
-  - make distclean
-  - cd kernel/
-  - make
+  - make all kernel
   - sudo make install
-  - cd ..
-  - make
-  - sudo make install
-  - sudo rm -rf mhvtl
 
   # Load it
   - sudo systemctl daemon-reload
