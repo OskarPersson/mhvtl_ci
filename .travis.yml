@@ -1,34 +1,32 @@
 os:
   - linux
-  
+
 sudo: required
 
 language: python
 
 install:
-  - sudo apt-get update && sudo apt-get install apache2 php5 sysstat lzop liblzo2-dev liblzo2-2 mtx mt-st sg3-utils zlib1g-dev git lsscsi build-essential gawk alien fakeroot linux-headers-$(uname -r) -y; cd $HOME
-  - mkdir $HOME/src 
-   
-  - sudo groupadd -r vtl 
-  - sudo useradd -r -c "Virtual Tape Library" -d /opt/mhvtl -g vtl vtl -s /bin/bash 
-  - sudo mkdir -p /opt/mhvtl 
-  - sudo mkdir -p /etc/mhvtl 
-  - sudo chown -Rf vtl:vtl /opt/mhvtl 
-  - sudo chown -Rf vtl:vtl /etc/mhvtl 
+  - sudo apt-get update && sudo apt-get install sysstat lzop liblzo2-dev liblzo2-2 mtx mt-st sg3-utils zlib1g-dev git lsscsi build-essential gawk alien fakeroot linux-headers-$(uname -r)
+  - cd $HOME
+  - mkdir $HOME/src
+  - cd $HOME
+  - git clone https://github.com/markh794/mhvtl.git mhvtl
+  - cd mhvtl/
+  - make distclean
+  - cd kernel/
+  - make
+  - sudo make install
+  - cd ..
+  - make
+  - sudo make install
+  - sudo rm -rf mhvtl
 
+  # Load it
+  - sudo systemctl daemon-reload
+  - sudo systemctl enable mhvtl.target
+  - sudo systemctl start mhvtl.target
 
-  - cd $HOME/src/ 
-  - git clone http://github.com/markh794/mhvtl.git
-  - cd mhvtl 
-  - make distclean 
-  - cd kernel/ 
-  - make && sudo make install 
-  - cd .. 
-  - make && sudo make install 
-
-
-  - sudo mkdir /etc/tgt 
-  - sudo service mhvtl start 
+  - sleep 3
 
 script:
   - lsscsi -g
