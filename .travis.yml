@@ -24,9 +24,9 @@ install:
   # Load it
   - sudo systemctl daemon-reload
   - sudo systemctl enable mhvtl.target
-  - sudo systemctl start mhvtl.target
+  - sudo systemctl restart mhvtl.target
 
-  - sleep 3
+  - sleep 30
 
 script:
   - lsscsi -g
