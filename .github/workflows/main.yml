@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Install
+        run: |
+          sudo apt-get update && sudo apt-get install sysstat lzop liblzo2-dev liblzo2-2 mtx mt-st sg3-utils zlib1g-dev git lsscsi build-essential gawk alien fakeroot linux-headers-$(uname -r)
+          cd $HOME
+          mkdir $HOME/src
+          cd $HOME
+          git clone https://github.com/markh794/mhvtl.git mhvtl
+          cd mhvtl/
+          make distclean
+          cd kernel
+          make
+          sudo make install
+          cd ..
+          make
+          sudo make install
+
+          sudo systemctl daemon-reload
+          sudo systemctl enable mhvtl.target
+          sudo systemctl restart mhvtl.target
+
+          sleep 30
+
+      - name: Test
+        run: |
+          lsscsi -g
