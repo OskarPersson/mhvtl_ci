@@ -16,26 +16,9 @@ jobs:
 
       - name: Install
         run: |
-          sudo apt-get update && sudo apt-get install sysstat lzop liblzo2-dev liblzo2-2 mtx mt-st sg3-utils zlib1g-dev git lsscsi build-essential gawk alien fakeroot linux-headers-$(uname -r)
-          cd $HOME
-          mkdir $HOME/src
-          cd $HOME
-          git clone https://github.com/markh794/mhvtl.git mhvtl
-          cd mhvtl/
-          make distclean
-          cd kernel
-          make
-          sudo make install
-          cd ..
-          make
-          sudo make install
-
-          sudo systemctl daemon-reload
-          sudo systemctl enable mhvtl.target
-          sudo systemctl restart mhvtl.target
-
-          sleep 30
-
-      - name: Test
-        run: |
-          lsscsi -g
+          sudo yum -y install gcc dkms make qt libgomp patch kernel-headers kernel-devel binutils glibc-headers glibc-devel font-forge wget
+          cd /etc/yum.repo.d/ && wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+          sudo yum install -y VirtualBox-5.1
+          /sbin/rcvboxdrv setup
+          sudo yum -y install https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm
+          vagrant up
