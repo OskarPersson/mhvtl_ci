@@ -10,15 +10,14 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
 
       - name: Install
         run: |
-          sudo yum -y install gcc dkms make qt libgomp patch kernel-headers kernel-devel binutils glibc-headers glibc-devel font-forge wget
-          cd /etc/yum.repo.d/ && wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
-          sudo yum install -y VirtualBox-5.1
-          /sbin/rcvboxdrv setup
-          sudo yum -y install https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.rpm
+          sudo apt update
+          sudo apt install -y virtualbox
+          curl -O https://releases.hashicorp.com/vagrant/2.2.6/vagrant_2.2.6_x86_64.deb
+          sudo apt install ./vagrant_2.2.6_x86_64.deb
           vagrant up
